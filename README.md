@@ -23,17 +23,10 @@ Step 2: Set Up the Blackbox Exporter
 First, you'll run the Blackbox Exporter on your local machine.9115
     1. Download: Go to the Prometheus downloads page and download the correct version for your operating system.
     2. Configure: Create a configuration file named blackbox.yml in the same directory. This file tells the exporter how to probe a target. For now, we'll just set up a simple HTTP probe.
-
-
-
-
-
-
-
-
     3. Run: Open a terminal, navigate to the directory, and start the exporter using the configuration file:
-
-./blackbox_exporter --config.file=blackbox.yml
+    ```
+    ./blackbox_exporter --config.file=blackbox.yml
+    ```
     4. Verify: Open your web browser and go to http://localhost:9115. You should see the Blackbox Exporter's web page. This means it's running!
 Step 3: Set Up Prometheus in a Docker Container
 Next, you'll set up the main monitoring server, Prometheus.
@@ -51,33 +44,13 @@ Gib mal ein:
 Bash
 ```￼
 dpkg -l | grep grafana
-Wenn da nichts kommt → Installation ist nicht durchgelaufen.
 ```
+Wenn da nichts kommt → Installation ist nicht durchgelaufen.
 
 🔧 Schritt 2: Grafana sauber installieren
 Mach nochmal explizit:
 
 Bash
-￼
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     2. Run Prometheus with Docker: Open a new terminal. Use the following command to run Prometheus in a container. This command also mounts your prometheus.yml file into the container.
     3. # Make sure you run this command from the directory where prometheus.yml is located
     4. docker run --name prometheus -p 9090:9090 -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
