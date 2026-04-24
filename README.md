@@ -74,16 +74,20 @@ Grafana ist ein tool, womit man die Daten von Server-Metriken , Datenbanken… v
 Grafana Installation:
 ## 1. Stelle sicher, dass alle wichtige Tools installiert sind. Mit dem Code:
 
-```sudo apt update
-sudo apt install -y apt-transport-https wget gnupg```
+```
+sudo apt update
+sudo apt install -y apt-transport-https wget gnupg
+```
 
 
 ￼
 Basic CPU / Mem / Net / Disk2.  Damit Ubuntu die Grafana-Pakete als vertrauenswürdig erkennt:
 
-```sudo mkdir -p /etc/apt/keyrings
+```
+sudo mkdir -p /etc/apt/keyrings
 wget -q -O - https://apt.grafana.com/gpg.key | sudo tee /etc/apt/keyrings/grafana.asc > /dev/null
-sudo chmod 644 /etc/apt/keyrings/grafana.asc```
+sudo chmod 644 /etc/apt/keyrings/grafana.asc
+```
 
 ## 3. Wie Grafana auf die Pakete zugreift
 
@@ -103,8 +107,10 @@ Basic CPU / Mem / Net / Diskpt/keyrings/grafana.asc] https://apt.grafana.com sta
 
 ## 6. Grafana starten:
 
-```sudo systemctl enable grafana-server
-sudo systemctl start grafana-server```
+```
+sudo systemctl enable grafana-server
+sudo systemctl start grafana-server
+```
 
 ##7.  Grafana richtig starten
 
