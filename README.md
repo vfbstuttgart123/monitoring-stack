@@ -298,4 +298,4 @@ sudo systemctl start node_exporter```
 ```exit```
 ```ps aux  grep blackbox```
 ```systemctl restart blackbox_exporter```
-```systemctl status blackbox_exporter```
+systemctl status blackbox_exporter
