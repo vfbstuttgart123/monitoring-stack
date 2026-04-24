@@ -7,14 +7,14 @@ Task: Set Up a Monitoring Environment with Prometheus and Blackbox Exporter
 Welcome! Over the next week, you'll get hands-on experience with industry-standard monitoring tools. Your main goal is to set up a Prometheus server running inside a Docker container to monitor an external service's availability using the Blackbox Exporter.
 This project will give you a great introduction to how modern systems ensure they are up and running.
 
-🎯 Your Goal
+### 🎯 Your Goal
 By the end of this week, you will have:
     1. A running Blackbox Exporter that can probe HTTP endpoints.
     2. A running Prometheus server in a Docker container.
     3. A Prometheus instance that is successfully scraping metrics (data) from the Blackbox Exporter.
     4. A dashboard in Prometheus where you can see if a target service (like google.com) is up or down.
 
-🗺️ The Plan: Step-by-Step Instructions
+### 🗺️ The Plan: Step-by-Step Instructions
 Follow these steps to complete the project.
 Step 1: Understand the Tools
     • Prometheus: An open-source monitoring and alerting toolkit. It collects and stores its metrics as time series data, i.e., metrics information is stored with the timestamp at which it was recorded.
