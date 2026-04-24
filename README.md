@@ -112,11 +112,11 @@ sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
 ```
 
-##7.  Grafana richtig starten
+## 7.  Grafana richtig starten
 
 ```systemctl status grafana-server```
 
-##8. Im Browser eingeben:
+## 8. Im Browser eingeben:
 ```http://localhost:3000```
 
 User: Admin
@@ -131,91 +131,115 @@ Passwort: Admin
 
 
 Prometheus einstellen:
-##1. Download & Entpacken
+## 1. Download & Entpacken
 
-```cd /tmp
+```
+cd /tmp
 wget https://github.com/prometheus/prometheus/releases/latest/download/prometheus-*.linux-amd64.tar.gz
 tar xvf prometheus-*.tar.gz
-cd prometheus-*```
+cd prometheus-*
+```
 
-##2. Verschieben (optional sauber)
+## 2. Verschieben (optional sauber)
 
-```sudo mv prometheus promtool /usr/local/bin/
+```
+sudo mv prometheus promtool /usr/local/bin/
 sudo mkdir /etc/prometheus
-sudo mv prometheus.yml /etc/prometheus/```
+sudo mv prometheus.yml /etc/prometheus/
+```
 
-##3. Minimal-Konfiguration prüfen
+## 3. Minimal-Konfiguration prüfen
 Datei:
-```/etc/prometheus/prometheus.yml
+```
+/etc/prometheus/prometheus.yml
 Standard reicht erstmal:
 global:
   scrape_interval: 15s
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['localhost:9090']```
+      - targets: ['localhost:9090']
+```
 
-##4. Starten
-prometheus ```--config.file=/etc/prometheus/prometheus.yml```
+## 4. Starten
+prometheus 
+```
+--config.file=/etc/prometheus/prometheus.yml
+```
 
-##5. Web UI öffnen
+## 5. Web UI öffnen
 Browser:
-```http://localhost:9090```
+```
+http://localhost:9090
+```
 
-##6. (Optional) Als Service einrichten
-```sudo nano /etc/systemd/system/prometheus.service```
+## 6. (Optional) Als Service einrichten
+```
+sudo nano /etc/systemd/system/prometheus.service
+```
 Inhalt:
-```[Unit]
+```
+[Unit]
 Description=Prometheus
 After=network.target
 [Service]
 ExecStart=/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.yml
 Restart=always
 [Install]
-WantedBy=multi-user.target```
+WantedBy=multi-user.target
+```
 Dann:
-```sudo systemctl daemon-reexec
+```
+sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
 sudo systemctl enable prometheus
-sudo systemctl start prometheus```
+sudo systemctl start prometheus
+```
 
-##7. Status check
+## 7. Status check
 ```systemctl status prometheus```
 
 
-###Blackbox exporter einstellen
-##1. Download & Entpacken
-```cd /tmp
+### Blackbox exporter einstellen
+## 1. Download & Entpacken
+```
+cd /tmp
 wget https://github.com/prometheus/blackbox_exporter/releases/latest/download/blackbox_exporter-*.linux-amd64.tar.gz
 tar xvf blackbox_exporter-*.tar.gz
-cd blackbox_exporter-*```
+cd blackbox_exporter-*
+```
 
-##2. Installieren
-```sudo mv blackbox_exporter /usr/local/bin/
+## 2. Installieren
+```
+sudo mv blackbox_exporter /usr/local/bin/
 sudo mkdir /etc/blackbox_exporter
-sudo mv blackbox.yml /etc/blackbox_exporter/```
+sudo mv blackbox.yml /etc/blackbox_exporter/
+```
 
-##3. Konfiguration
+## 3. Konfiguration
 Datei:
-```/etc/blackbox_exporter/blackbox.yml
+```
+/etc/blackbox_exporter/blackbox.yml
 Standard reicht erstmal (HTTP check):
 modules:
   http_2xx:
     prober: http
     timeout: 5s
     http:
-      valid_status_codes: []```
+      valid_status_codes: []
+```
 
-##4. Starten
+## 4. Starten
 blackbox_exporter --config.file=/etc/blackbox_exporter/blackbox.yml
 Web:
 ```http://localhost:9115```
 
-##5. In Prometheus einbinden
+## 5. In Prometheus einbinden
 Datei bearbeiten:
 sudo nano /etc/prometheus/prometheus.yml
 Hinzufügen:
-```- job_name: 'blackbox'
+```
+- job_name: 'blackbox'
   metrics_path: /probe
   params:
     module: [http_2xx]
@@ -229,66 +253,79 @@ Hinzufügen:
     - source_labels: [__param_target]
       target_label: instance
     - target_label: __address__
-      replacement: localhost:9115```
+      replacement: localhost:9115
+```
 
-##6. Prometheus neu starten
+## 6. Prometheus neu starten
+```
 sudo systemctl restart prometheus
+```
 
-##7. Test
+## 7. Test
 Im Browser:
-```http://localhost:9090```
+```
+http://localhost:9090
+```
 #Query:
 probe_success
 
 
 
 Node Exporter einstellen
-##1. Download & Entpacken
-```cd /tmp
+## 1. Download & Entpacken
+```
+cd /tmp
 wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-*.linux-amd64.tar.gz
 tar xvf node_exporter-*.tar.gz
-cd node_exporter-*```
+cd node_exporter-*
+```
 
-##2. Installieren
+## 2. Installieren
 ```sudo mv node_exporter /usr/local/bin/```
 
-##3. Starten
+## 3. Starten
 node_exporter
 Web prüfen:
 ```http://localhost:9100/metrics```
 
-##4. In Prometheus einbinden
+## 4. In Prometheus einbinden
 Datei:
-```sudo nano /etc/prometheus/prometheus.yml
+```
+sudo nano /etc/prometheus/prometheus.yml
 Hinzufügen:
 - job_name: 'node'
   static_configs:
-    - targets: ['localhost:9100']```
+    - targets: ['localhost:9100']
+```
 
-##5. Prometheus neu starten
+## 5. Prometheus neu starten
 ```sudo systemctl restart prometheus```
 
 
-##6. Test
+## 6. Test
 Im Browser:
 ```http://localhost:9090```
 Query:
 ```node_cpu_seconds_total```
 
-##7. Als Service
+## 7. Als Service
 ```sudo nano /etc/systemd/system/node_exporter.service```
-```[Unit]
+```
+Unit]
 Description=Node Exporter
 After=network.target
 [Service]
 ExecStart=/usr/local/bin/node_exporter
 Restart=always
 [Install]
-WantedBy=multi-user.target```
-#Dann:
-```sudo systemctl daemon-reload
+WantedBy=multi-user.target
+```
+# Dann:
+```
+sudo systemctl daemon-reload
 sudo systemctl enable node_exporter
-sudo systemctl start node_exporter```
+sudo systemctl start node_exporter
+```
 
 
 
@@ -297,11 +334,14 @@ sudo systemctl start node_exporter```
 
 
 
-#Sobald der blackbox exporter failed beim starten solltest du das machen: 
+# Sobald der blackbox exporter failed beim starten solltest du das machen: 
 
 ```sudo -i```
 ```kill 1275```
 ```exit```
 ```ps aux  grep blackbox```
 ```systemctl restart blackbox_exporter```
+```
 systemctl status blackbox_exporter
+```
+
