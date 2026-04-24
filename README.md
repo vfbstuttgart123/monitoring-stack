@@ -49,9 +49,10 @@ Das bedeutet ganz simpel: Grafana wurde noch nicht erfolgreich installiert (oder
 Gib mal ein:
 
 Bash
-￼
+```￼
 dpkg -l | grep grafana
 Wenn da nichts kommt → Installation ist nicht durchgelaufen.
+```
 
 🔧 Schritt 2: Grafana sauber installieren
 Mach nochmal explizit:
